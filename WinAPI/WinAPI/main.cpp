@@ -2,6 +2,8 @@
 #include <Windowsx.h>
 #include "resource.h"
 
+CONST CHAR g_sz_LOGIN_INVITATION[] = "Введите имя пользователя";
+
 BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
@@ -45,17 +47,20 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_INITDIALOG: //это сообщение отправляется один раз при инициализации окна
+		{
+			HWND hEdit = GetDlgItem(hwnd, IDC_EDIT_LOGIN);
+			SendMessage(hEdit, WM_SETTEXT, 0, (LPARAM)g_sz_LOGIN_INVITATION);
+		}
 		break;
 	case WM_COMMAND: //обрабатывает нажатие кнопок и другие действия пользователя
 		switch (LOWORD(wParam))
 		{
 		case IDC_EDIT_LOGIN :
 			{
-				HWND hLoginPlaceholder = GetDlgItem(hwnd, IDC_LOGIN_PLACEHOLDER);
+				/*HWND hLoginPlaceholder = GetDlgItem(hwnd, IDC_LOGIN_PLACEHOLDER);
 				
 				HWND hEditLogin = GetDlgItem(hwnd, IDC_EDIT_LOGIN);
 				//SetDlgItemTextW(hEditLogin, IDC_EDIT_LOGIN, (LPCWSTR)"Введите имя пользователя"); //не нашел, как изменить видимость текстового окна
-
 				//bool temp = SetDlgItemInt(hLoginPlaceholder, IDC_LOGIN_PLACEHOLDER, 1, false); //не нашел, как изменить видимость текстового окна
 				//LPSTR temp_s = WM_GETTEXT;
 				//LPSTR temp_s1 = 0; //NULL
@@ -74,6 +79,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				CONST INT SIZE = 256;
 				CHAR sz_buffer[SIZE] = {};
 				SendMessage(hEditLogin, WM_GETTEXT, SIZE, (LPARAM)sz_buffer);
+				SendMessage(hLoginPlaceholder, WM_ERASEBKGND, SIZE, (LPARAM)sz_buffer);
 				//if (WM_GETTEXT == 0)
 				if (sz_buffer[0] == NULL)
 				{
@@ -81,7 +87,16 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 					ShowWindow(hLoginPlaceholder, SW_SHOW); //непонятно, почему не работает  свойство transparent 
 					BringWindowToTop(hLoginPlaceholder); //окно снова становится видимым, но уходит в z-порядке ниже окна Edit. Эта функция не раюотает почему-то
-				}
+				}*/
+				
+				CONST INT SIZE = 256;
+				CHAR sz_buffer[SIZE]{};
+				SendMessage((HWND)lParam, WM_GETTEXT, SIZE, (LPARAM)sz_buffer);
+
+				if (HIWORD(wParam) == EN_SETFOCUS && (strcmp(sz_buffer, g_sz_LOGIN_INVITATION) == 0))
+					SendMessage((HWND)lParam, WM_SETTEXT, 0, (LPARAM)"");
+				if (HIWORD(wParam) == EN_KILLFOCUS && (strcmp(sz_buffer, "") == 0))
+					SendMessage((HWND)lParam, WM_SETTEXT, 0, (LPARAM)g_sz_LOGIN_INVITATION);
 			}
 			break;
 		case IDC_BUTTON_COPY: 
