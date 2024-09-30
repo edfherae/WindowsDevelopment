@@ -6,7 +6,15 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
-	//	СКОПИРОВАТЬ ИЗ РЕПЫ ПОЯСНЕНИЯ
+	//hInstance - экземпляр запущенного *.exe-файла нашей программы
+	//hPrevInst - НЕ используется
+	//LPSTR - Long Pointer To String
+	//lpCmdLine - CommandLine (командная строка с параметрами запуска приложения)
+	//nCmdShow  - режим отображения окна (развернуто на весь экран, cвернуто на панель задач и т.д.)
+	//Префиксы: n..., lp... это Венгерская нотация
+	//			n - Number
+	//			lp - Long Pointer
+	//			h - HINSTANCE
 
 	/*MessageBox
 	(
@@ -72,6 +80,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					//SetDlgItemTextA(hLoginPlaceholder, IDC_LOGIN_PLACEHOLDER, "Введите имя пользователя");
 
 					ShowWindow(hLoginPlaceholder, SW_SHOW); //непонятно, почему не работает  свойство transparent 
+					BringWindowToTop(hLoginPlaceholder); //окно снова становится видимым, но уходит в z-порядке ниже окна Edit. Эта функция не раюотает почему-то
 				}
 			}
 			break;
