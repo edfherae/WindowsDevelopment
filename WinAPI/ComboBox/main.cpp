@@ -1,5 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <Windows.h>
 #include "resource.h"
+#include <cstdio>
 
 CONST CHAR* g_COMBO_BOX_ITEMS[] = { "This", "is", "my", "First", "Combo", "Box" };
 
@@ -35,13 +37,20 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case IDOK:
 			{
 				HWND hComboBox = GetDlgItem(hwnd, IDC_COMBO1);
-				INT index = SendMessage(hComboBox, CB_GETCURSEL, 0, 0);
-				CONST CHAR buffer[100]{};
-				SendMessage(hComboBox, CB_GETLBTEXT, 100, (LPARAM)buffer);
-				CONST CHAR* sum_buffer[100] = { "Вы выбрали пункт ", (LPCSTR)index, " со значением ", buffer };
-				MessageBox(hwnd, sum_buffer[0] + "", "Info", MB_OK | MB_ICONINFORMATION);
+				INT i = SendMessage(hComboBox, CB_GETCURSEL, 0, 0);
+				CONST INT SIZE = 256; //byte
+				CHAR sz_buffer[SIZE]{}; //string zero
+				SendMessage(hComboBox, CB_GETLBTEXT, i, (LPARAM)sz_buffer);
+				CHAR sz_message[SIZE]{};
+				sprintf(sz_message, "Вы выбрали пункт №%i со значением \"%s\"", i, sz_buffer);
+				//спецификатор %i - целое число
+				//спецификатор %s - строка [printf ДОКИ]
+				MessageBox(hwnd, sz_message, "Info", MB_OK | MB_ICONINFORMATION);
 			}
 			break;	
+		case IDCANCEL:
+			EndDialog(hwnd, 0);
+			break;
 		}
 		break;
 	case WM_CLOSE:
