@@ -48,6 +48,13 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				MessageBox(hwnd, sz_message, "Info", MB_OK | MB_ICONINFORMATION);
 			}
 			break;	
+		case IDC_CHECK1 && //не нашел документацию по чекбоксу:
+		{
+			HWND hComboBox = GetDlgItem(hwnd, IDC_COMBO1);
+			SendMessage(hComboBox, CB_RESETCONTENT, 0, 0);
+			//здесь через цикл комбобокс заполняется по порядку
+		}
+			break;
 		case IDCANCEL:
 			EndDialog(hwnd, 0);
 			break;
