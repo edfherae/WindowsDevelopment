@@ -1,0 +1,30 @@
+﻿[Arrow]
+Path=Minecraft's Diamond Sword.ani
+
+[Wait]
+Path=Minecraft's Compass.ani
+
+[AppStarting]
+Path=Minecraft's Clock.ani
+
+[Hand]
+Path=Minecraft's Diamond Pick Axe -mining-.ani
+
+[SizeNESW]
+Path=Minecraft's Arrow -Diagonal 1-.ani
+
+[SizeNWSE]
+Path=Minecraft's Arrow -Diagonal 2-.ani
+
+[SizeWE]
+Path=Minecraft's Arrow -Horizontal-.ani
+
+[SizeNS]
+Path=Minecraft's Arrow -Vertical.ani
+
+[Help]
+Path=Minecraft's Sign help.cur
+
+[IBeam]
+Path=Minecraft's Stick -Vertical-.cur
+
